@@ -7,6 +7,7 @@ step "Run an AWS CLI Script" {
             Octopus.Action.Aws.Region = "us-east-1"
             Octopus.Action.AwsAccount.UseInstanceRole = "False"
             Octopus.Action.AwsAccount.Variable = "aws account"
+            Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
                 apt update -y
                 apt-get install -y \
@@ -27,6 +28,6 @@ step "Run an AWS CLI Script" {
             Octopus.Action.Script.Syntax = "Bash"
             OctopusUseBundledTooling = "False"
         }
-        worker_pool_variable = ""
+        worker_pool = "Hosted Ubuntu"
     }
 }
