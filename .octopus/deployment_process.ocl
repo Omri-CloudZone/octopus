@@ -1,0 +1,32 @@
+step "Run an AWS CLI Script" {
+
+    action {
+        action_type = "Octopus.AwsRunScript"
+        properties = {
+            Octopus.Action.Aws.AssumeRole = "False"
+            Octopus.Action.Aws.Region = "us-east-1"
+            Octopus.Action.AwsAccount.UseInstanceRole = "False"
+            Octopus.Action.AwsAccount.Variable = "aws account"
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                apt update -y
+                apt-get install -y \
+                    ca-certificates \
+                    curl \
+                    gnupg \
+                    lsb-release
+                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+                echo \
+                  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+                  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+                apt-get update -y
+                apt-get install -y docker-ce docker-ce-cli containerd.io
+                docker build -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") .
+                docker images
+            EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool_variable = ""
+    }
+}
