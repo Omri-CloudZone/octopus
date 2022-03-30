@@ -5,7 +5,9 @@ step "Run a Script" {
         properties = {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
-                tree
+                
+                ls -la
+                cd ..
                 ls -la
                 
                 #docker build -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") .
