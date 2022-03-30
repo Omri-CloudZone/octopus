@@ -1,12 +1,8 @@
-step "Run an AWS CLI Script" {
+step "Run a Script" {
 
     action {
-        action_type = "Octopus.AwsRunScript"
+        action_type = "Octopus.Script"
         properties = {
-            Octopus.Action.Aws.AssumeRole = "False"
-            Octopus.Action.Aws.Region = "us-east-1"
-            Octopus.Action.AwsAccount.UseInstanceRole = "False"
-            Octopus.Action.AwsAccount.Variable = "aws account"
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
                 apt update -y
@@ -26,7 +22,6 @@ step "Run an AWS CLI Script" {
             EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
-            OctopusUseBundledTooling = "False"
         }
         worker_pool = "Hosted Ubuntu"
     }
