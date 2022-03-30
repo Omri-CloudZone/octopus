@@ -5,8 +5,15 @@ step "Run a Script" {
         properties = {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
-                docker build -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") .
-                docker images
+                pwd
+                cd ..
+                ls -la
+                cd ..
+                ls -la
+                
+                
+                #docker build -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") .
+                #docker images
             EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
