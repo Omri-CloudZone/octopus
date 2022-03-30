@@ -5,7 +5,7 @@ step "Run a Script" {
         properties = {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
-                apt update -y
+                sudo apt-get update -y
                 apt-get install -y \
                     ca-certificates \
                     curl \
