@@ -10,7 +10,16 @@ step "Run a Script" {
                 ls -la
                 cd ..
                 ls -la
-                
+                cd Work
+                ls -la
+                cd ../Tools
+                ls -la
+                cd ../Logs
+                ls -la
+                cd ../Applications
+                ls -la
+                cd ../../
+                ls -la
                 
                 #docker build -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") -t webapp/webapp:$(get_octopusvariable "Octopus.Release.Git.CommitHash") .
                 #docker images
